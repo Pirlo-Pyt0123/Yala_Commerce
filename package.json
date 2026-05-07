@@ -1,0 +1,19 @@
+{
+  "name": "licoreria-monorepo",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "pnpm run --parallel dev",
+    "dev:web": "pnpm --filter @licoreria/web dev",
+    "dev:api": "pnpm --filter @licoreria/api start:dev",
+    "build:web": "pnpm --filter @licoreria/web build",
+    "build:api": "pnpm --filter @licoreria/api build",
+    "db:migrate": "pnpm --filter @licoreria/api db:migrate",
+    "db:seed": "pnpm --filter @licoreria/api db:seed",
+    "db:studio": "pnpm --filter @licoreria/api db:studio",
+    "db:reset": "pnpm --filter @licoreria/api db:reset"
+  },
+  "devDependencies": {
+    "typescript": "^5.3.3"
+  }
+}
