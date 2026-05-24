@@ -116,6 +116,35 @@ export class OrdersService {
     return this.format(order);
   }
 
+  // ── Admin ──────────────────────────────────────────────────────────────────
+
+  async adminFindAll(page = 1, limit = 20) {
+    const [orders, total] = await Promise.all([
+      this.prisma.order.findMany({
+        include: {
+          user: { select: { id: true, name: true, email: true } },
+          items: { include: { product: { select: { id: true, name: true, slug: true, imageUrl: true } } } },
+        },
+        orderBy: { createdAt: 'desc' },
+        skip: (page - 1) * limit,
+        take: limit,
+      }),
+      this.prisma.order.count(),
+    ]);
+    return {
+      data: orders.map((o) => ({ ...this.format(o), user: (o as any).user })),
+      meta: { total, page, limit, totalPages: Math.ceil(total / limit) },
+    };
+  }
+
+  async updateStatus(orderId: number, status: string) {
+    const valid = ['PENDING', 'CONFIRMED', 'SHIPPED', 'DELIVERED', 'CANCELLED'];
+    if (!valid.includes(status)) throw new NotFoundException('Estado inválido');
+    const order = await this.prisma.order.findUnique({ where: { id: orderId } });
+    if (!order) throw new NotFoundException('Pedido no encontrado');
+    return this.prisma.order.update({ where: { id: orderId }, data: { status: status as any } });
+  }
+
   private format(order: any) {
     return {
       id: order.id,
