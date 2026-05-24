@@ -1,11 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 
 export default function LoginPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const from = searchParams.get("from") ?? "/";
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -13,7 +15,7 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  async function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setLoading(true);
     setError("");
@@ -35,7 +37,10 @@ export default function LoginPage() {
       localStorage.setItem("token", data.token);
       if (remember) localStorage.setItem("remember", "true");
 
-      router.push("/");
+      const maxAge = remember ? 30 * 24 * 60 * 60 : 7 * 24 * 60 * 60;
+      document.cookie = `token=${data.token}; path=/; max-age=${maxAge}; SameSite=Lax`;
+
+      router.push(from);
     } catch {
       setError("Error de conexión con el servidor");
     } finally {
@@ -144,6 +149,14 @@ export default function LoginPage() {
               Registrate
             </Link>
           </p>
+
+          {/* Volver al inicio */}
+          <Link
+            href="/"
+            className="block text-center text-white/40 hover:text-white/70 text-xs transition-colors"
+          >
+            ← Volver al inicio
+          </Link>
         </form>
       </div>
     </main>

@@ -29,6 +29,8 @@ model User {
   isActive  Boolean  @default(true)
   roleId    Int
   role      Role     @relation(fields: [roleId], references: [id])
+  cart      Cart?
+  orders    Order[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -62,9 +64,93 @@ model Product {
   imageUrl    String?
   isActive    Boolean  @default(true)
   categoryId  Int
-  category    Category @relation(fields: [categoryId], references: [id])
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  category    Category    @relation(fields: [categoryId], references: [id])
+  cartItems   CartItem[]
+  orderItems  OrderItem[]
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
 
   @@map("products")
+}
+
+// ──────────────────────────────────────────
+// CARRITO
+// ──────────────────────────────────────────
+
+model Cart {
+  id        Int        @id @default(autoincrement())
+  userId    Int        @unique
+  user      User       @relation(fields: [userId], references: [id])
+  items     CartItem[]
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+
+  @@map("carts")
+}
+
+model CartItem {
+  id        Int      @id @default(autoincrement())
+  cartId    Int
+  cart      Cart     @relation(fields: [cartId], references: [id], onDelete: Cascade)
+  productId Int
+  product   Product  @relation(fields: [productId], references: [id])
+  quantity  Int      @default(1)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([cartId, productId])
+  @@map("cart_items")
+}
+
+// ──────────────────────────────────────────
+// PEDIDOS
+// ──────────────────────────────────────────
+
+enum OrderStatus {
+  PENDING
+  CONFIRMED
+  SHIPPED
+  DELIVERED
+  CANCELLED
+}
+
+enum PaymentStatus {
+  PENDING
+  PAID
+  FAILED
+  REFUNDED
+}
+
+model Order {
+  id            Int           @id @default(autoincrement())
+  userId        Int
+  user          User          @relation(fields: [userId], references: [id])
+  items         OrderItem[]
+  status        OrderStatus   @default(PENDING)
+  paymentMethod String        @default("COD")
+  paymentStatus PaymentStatus @default(PENDING)
+  total         Decimal       @db.Decimal(10, 2)
+  // Datos de envío (snapshot al momento de la compra)
+  fullName      String
+  phone         String
+  address       String
+  district      String
+  city          String
+  notes         String?
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  @@map("orders")
+}
+
+model OrderItem {
+  id        Int     @id @default(autoincrement())
+  orderId   Int
+  order     Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  productId Int
+  product   Product @relation(fields: [productId], references: [id])
+  quantity  Int
+  price     Decimal @db.Decimal(10, 2) // precio al momento de compra
+
+  @@map("order_items")
 }
