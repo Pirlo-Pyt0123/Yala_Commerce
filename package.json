@@ -8,6 +8,7 @@
     "dev:api": "pnpm --filter @licoreria/api start:dev",
     "build:web": "pnpm --filter @licoreria/web build",
     "build:api": "pnpm --filter @licoreria/api build",
+    "db:generate": "pnpm --filter @licoreria/api db:generate",
     "db:migrate": "pnpm --filter @licoreria/api db:migrate",
     "db:seed": "pnpm --filter @licoreria/api db:seed",
     "db:studio": "pnpm --filter @licoreria/api db:studio",
