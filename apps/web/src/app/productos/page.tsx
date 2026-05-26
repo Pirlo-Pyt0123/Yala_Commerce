@@ -3,6 +3,7 @@
 import { useEffect, useState, useCallback } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 import ProductCard from "@/components/ProductCard";
 
 const API = process.env.NEXT_PUBLIC_API_URL;
@@ -200,9 +201,7 @@ export default function ProductosPage() {
         )}
       </div>
 
-      <footer className="border-t border-zinc-800 py-8 text-center text-zinc-600 text-sm">
-        © {new Date().getFullYear()} Licorería — Todos los derechos reservados
-      </footer>
+      <Footer />
     </div>
   );
 }
