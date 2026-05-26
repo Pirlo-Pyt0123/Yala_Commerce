@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 import ProductCard from "@/components/ProductCard";
 
 const API = process.env.NEXT_PUBLIC_API_URL;
@@ -139,10 +140,7 @@ export default async function Home() {
         </section>
       )}
 
-      {/* Footer */}
-      <footer className="border-t border-zinc-800 py-8 text-center text-zinc-600 text-sm">
-        © {new Date().getFullYear()} Licorería — Todos los derechos reservados
-      </footer>
+      <Footer />
     </div>
   );
 }
