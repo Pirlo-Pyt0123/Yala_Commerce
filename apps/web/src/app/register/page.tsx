@@ -1,10 +1,11 @@
 "use client";
 
+import { Suspense } from "react";
 import { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 
-export default function RegisterPage() {
+function RegisterContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const from = searchParams.get("from") ?? "/";
@@ -185,5 +186,13 @@ export default function RegisterPage() {
         </form>
       </div>
     </main>
+  );
+}
+
+export default function RegisterPage() {
+  return (
+    <Suspense>
+      <RegisterContent />
+    </Suspense>
   );
 }

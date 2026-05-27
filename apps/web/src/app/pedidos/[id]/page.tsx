@@ -1,5 +1,6 @@
 "use client";
 
+import { Suspense } from "react";
 import { useEffect, useState } from "react";
 import { useParams, useSearchParams, useRouter } from "next/navigation";
 import Image from "next/image";
@@ -49,7 +50,7 @@ type Order = {
   createdAt: string;
 };
 
-export default function PedidoPage() {
+function PedidoContent() {
   const { id } = useParams<{ id: string }>();
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -223,5 +224,13 @@ export default function PedidoPage() {
 
       <Footer />
     </div>
+  );
+}
+
+export default function PedidoPage() {
+  return (
+    <Suspense>
+      <PedidoContent />
+    </Suspense>
   );
 }

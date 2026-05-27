@@ -1,5 +1,6 @@
 "use client";
 
+import { Suspense } from "react";
 import { useEffect, useState, useCallback } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import Navbar from "@/components/Navbar";
@@ -31,7 +32,7 @@ type Meta = {
   totalPages: number;
 };
 
-export default function ProductosPage() {
+function ProductosContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
 
@@ -203,5 +204,13 @@ export default function ProductosPage() {
 
       <Footer />
     </div>
+  );
+}
+
+export default function ProductosPage() {
+  return (
+    <Suspense>
+      <ProductosContent />
+    </Suspense>
   );
 }
