@@ -12,11 +12,10 @@ function decodeToken(token: string): { role?: string } | null {
   }
 }
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const token = request.cookies.get("token")?.value;
   const { pathname } = request.nextUrl;
 
-  // Admin routes: require token + admin role
   if (pathname.startsWith(ADMIN_PREFIX)) {
     if (!token) {
       const url = request.nextUrl.clone();
@@ -31,7 +30,6 @@ export function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
-  // User protected routes
   if (PROTECTED.some((r) => pathname.startsWith(r)) && !token) {
     const url = request.nextUrl.clone();
     url.pathname = "/login";
