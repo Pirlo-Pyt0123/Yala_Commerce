@@ -136,7 +136,7 @@ export default function CheckoutPage() {
   if (!cart) return null;
 
   const subtotal = Number(cart.subtotal);
-  const shipping = 0; // free / TBD
+  const shipping: number = 0;
   const total = subtotal + shipping;
 
   return (
