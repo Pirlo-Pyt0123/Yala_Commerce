@@ -21,13 +21,14 @@ type Product = {
   category: { name: string; slug: string };
 };
 
-async function getProduct(slug: string): Promise<Product | null> {
+async function getProduct(slug: string): Promise<Product | null | "error"> {
   try {
-    const res = await fetch(`${API}/products/${slug}`, { next: { revalidate: 60 } });
-    if (!res.ok) return null;
+    const res = await fetch(`${API}/products/${slug}`, { cache: "no-store" });
+    if (res.status === 404) return null;
+    if (!res.ok) return "error";
     return res.json();
   } catch {
-    return null;
+    return "error";
   }
 }
 
@@ -39,7 +40,19 @@ export default async function ProductoDetalle({
   const { slug } = await params;
   const product = await getProduct(slug);
 
-  if (!product) notFound();
+  if (product === null) notFound();
+
+  if (product === "error") {
+    return (
+      <div className="min-h-screen bg-zinc-950 flex flex-col items-center justify-center gap-4">
+        <p className="text-zinc-400 text-lg">No se pudo cargar el producto.</p>
+        <p className="text-zinc-600 text-sm">El servidor está iniciando, intenta de nuevo en unos segundos.</p>
+        <a href={`/productos/${slug}`} className="text-green-400 hover:text-green-300 text-sm transition-colors">
+          Reintentar
+        </a>
+      </div>
+    );
+  }
 
   const inStock = product.stock > 0;
 
