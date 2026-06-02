@@ -52,7 +52,7 @@ function LoginContent() {
   return (
     <main
       className="min-h-screen flex items-center justify-center bg-cover bg-center"
-      style={{ backgroundImage: "url('/fondo-login.jpg')" }}
+      style={{ backgroundImage: "url('/fondo_login.webp')" }}
     >
       <div className="w-full max-w-sm px-4">
         <form
@@ -117,7 +117,7 @@ function LoginContent() {
             <div
               onClick={() => setRemember(!remember)}
               className={`w-5 h-5 rounded flex items-center justify-center border transition-colors ${
-                remember ? "bg-green-500 border-green-500" : "border-white/40 bg-white/10"
+                remember ? "bg-amber-500 border-amber-500" : "border-white/40 bg-white/10"
               }`}
             >
               {remember && (
@@ -138,7 +138,7 @@ function LoginContent() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-green-500 hover:bg-green-400 disabled:opacity-60 text-white font-semibold py-3 rounded-full transition-colors text-sm"
+            className="w-full bg-amber-500 hover:bg-amber-400 disabled:opacity-60 text-white font-semibold py-3 rounded-full transition-colors text-sm"
           >
             {loading ? "Ingresando..." : "Login"}
           </button>

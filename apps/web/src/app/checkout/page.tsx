@@ -64,7 +64,7 @@ export default function CheckoutPage() {
     phone: "",
     address: "",
     district: "",
-    city: "Lima",
+    city: "Sucre",
     notes: "",
   });
 
@@ -169,7 +169,7 @@ export default function CheckoutPage() {
                       onChange={handleChange}
                       required
                       placeholder="Juan Pérez"
-                      className="w-full bg-zinc-800 border border-zinc-700 rounded-xl px-4 py-2.5 text-white text-sm placeholder-zinc-600 focus:outline-none focus:border-green-500 transition-colors"
+                      className="w-full bg-zinc-800 border border-zinc-700 rounded-xl px-4 py-2.5 text-white text-sm placeholder-zinc-600 focus:outline-none focus:border-amber-500 transition-colors"
                     />
                   </div>
                   <div className="space-y-1.5">
@@ -182,7 +182,7 @@ export default function CheckoutPage() {
                       placeholder="987654321"
                       type="tel"
                       pattern="\d{7,15}"
-                      className="w-full bg-zinc-800 border border-zinc-700 rounded-xl px-4 py-2.5 text-white text-sm placeholder-zinc-600 focus:outline-none focus:border-green-500 transition-colors"
+                      className="w-full bg-zinc-800 border border-zinc-700 rounded-xl px-4 py-2.5 text-white text-sm placeholder-zinc-600 focus:outline-none focus:border-amber-500 transition-colors"
                     />
                   </div>
                 </div>
@@ -196,7 +196,7 @@ export default function CheckoutPage() {
                     required
                     minLength={5}
                     placeholder="Av. Example 123, Dpto. 4B"
-                    className="w-full bg-zinc-800 border border-zinc-700 rounded-xl px-4 py-2.5 text-white text-sm placeholder-zinc-600 focus:outline-none focus:border-green-500 transition-colors"
+                    className="w-full bg-zinc-800 border border-zinc-700 rounded-xl px-4 py-2.5 text-white text-sm placeholder-zinc-600 focus:outline-none focus:border-amber-500 transition-colors"
                   />
                 </div>
 
@@ -208,8 +208,8 @@ export default function CheckoutPage() {
                       value={form.district}
                       onChange={handleChange}
                       required
-                      placeholder="Miraflores"
-                      className="w-full bg-zinc-800 border border-zinc-700 rounded-xl px-4 py-2.5 text-white text-sm placeholder-zinc-600 focus:outline-none focus:border-green-500 transition-colors"
+                      placeholder="Chuquisaca"
+                      className="w-full bg-zinc-800 border border-zinc-700 rounded-xl px-4 py-2.5 text-white text-sm placeholder-zinc-600 focus:outline-none focus:border-amber-500 transition-colors"
                     />
                   </div>
                   <div className="space-y-1.5">
@@ -219,8 +219,8 @@ export default function CheckoutPage() {
                       value={form.city}
                       onChange={handleChange}
                       required
-                      placeholder="Lima"
-                      className="w-full bg-zinc-800 border border-zinc-700 rounded-xl px-4 py-2.5 text-white text-sm placeholder-zinc-600 focus:outline-none focus:border-green-500 transition-colors"
+                      placeholder="Sucre"
+                      className="w-full bg-zinc-800 border border-zinc-700 rounded-xl px-4 py-2.5 text-white text-sm placeholder-zinc-600 focus:outline-none focus:border-amber-500 transition-colors"
                     />
                   </div>
                 </div>
@@ -233,7 +233,7 @@ export default function CheckoutPage() {
                     onChange={handleChange}
                     rows={3}
                     placeholder="Indicaciones para la entrega, referencia, etc."
-                    className="w-full bg-zinc-800 border border-zinc-700 rounded-xl px-4 py-2.5 text-white text-sm placeholder-zinc-600 focus:outline-none focus:border-green-500 transition-colors resize-none"
+                    className="w-full bg-zinc-800 border border-zinc-700 rounded-xl px-4 py-2.5 text-white text-sm placeholder-zinc-600 focus:outline-none focus:border-amber-500 transition-colors resize-none"
                   />
                 </div>
               </section>
@@ -255,18 +255,18 @@ export default function CheckoutPage() {
                           !opt.available
                             ? "border-zinc-800 opacity-40 cursor-not-allowed"
                             : selected
-                            ? "border-green-500 bg-green-500/10"
+                            ? "border-amber-500 bg-amber-500/10"
                             : "border-zinc-700 hover:border-zinc-600"
                         }`}
                       >
                         {/* Radio */}
                         <div className={`mt-0.5 w-4 h-4 rounded-full border-2 shrink-0 flex items-center justify-center ${
-                          selected ? "border-green-500" : "border-zinc-600"
+                          selected ? "border-amber-500" : "border-zinc-600"
                         }`}>
-                          {selected && <div className="w-2 h-2 rounded-full bg-green-500" />}
+                          {selected && <div className="w-2 h-2 rounded-full bg-amber-500" />}
                         </div>
 
-                        <div className={`shrink-0 ${selected ? "text-green-400" : "text-zinc-500"}`}>
+                        <div className={`shrink-0 ${selected ? "text-amber-400" : "text-zinc-500"}`}>
                           {opt.icon}
                         </div>
 
@@ -316,7 +316,7 @@ export default function CheckoutPage() {
                         <p className="text-zinc-500 text-xs">x{item.quantity}</p>
                       </div>
                       <p className="text-white text-xs font-medium shrink-0">
-                        S/ {(Number(item.product.price) * item.quantity).toFixed(2)}
+                        Bs. {(Number(item.product.price) * item.quantity).toFixed(2)}
                       </p>
                     </div>
                   ))}
@@ -325,29 +325,29 @@ export default function CheckoutPage() {
                 <div className="border-t border-zinc-800 pt-3 space-y-2 text-sm">
                   <div className="flex justify-between text-zinc-400">
                     <span>Subtotal</span>
-                    <span>S/ {subtotal.toFixed(2)}</span>
+                    <span>Bs. {subtotal.toFixed(2)}</span>
                   </div>
                   <div className="flex justify-between text-zinc-400">
                     <span>Envío</span>
-                    <span className="text-green-400">{shipping === 0 ? "Por confirmar" : `S/ ${shipping.toFixed(2)}`}</span>
+                    <span className="text-amber-400">{shipping === 0 ? "Por confirmar" : `Bs. ${shipping.toFixed(2)}`}</span>
                   </div>
                   <div className="flex justify-between text-white font-semibold pt-1 border-t border-zinc-800">
                     <span>Total</span>
-                    <span>S/ {total.toFixed(2)}</span>
+                    <span>Bs. {total.toFixed(2)}</span>
                   </div>
                 </div>
 
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="w-full bg-green-500 hover:bg-green-400 disabled:opacity-60 disabled:cursor-not-allowed text-white font-semibold py-3 rounded-full transition-colors text-sm"
+                  className="w-full bg-amber-500 hover:bg-amber-400 disabled:opacity-60 disabled:cursor-not-allowed text-white font-semibold py-3 rounded-full transition-colors text-sm"
                 >
                   {submitting ? "Procesando..." : "Confirmar pedido"}
                 </button>
 
                 <Link
                   href="/carrito"
-                  className="block text-center text-zinc-500 hover:text-zinc-300 text-xs transition-colors"
+                  className="block w-full text-center border border-zinc-700 hover:border-zinc-500 text-zinc-400 hover:text-white font-medium py-3 rounded-full transition-colors text-sm"
                 >
                   Volver al carrito
                 </Link>

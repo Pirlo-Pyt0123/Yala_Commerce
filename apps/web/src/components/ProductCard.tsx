@@ -1,5 +1,7 @@
+"use client";
+
 import Image from "next/image";
-import Link from "next/link";
+import { useDrawer } from "@/context/DrawerContext";
 
 type Props = {
   slug: string;
@@ -10,13 +12,18 @@ type Props = {
 };
 
 export default function ProductCard({ slug, name, price, imageUrl, category }: Props) {
+  const { openDrawer } = useDrawer();
+
   return (
-    <Link
-      href={`/productos/${slug}`}
-      className="group flex flex-col bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden hover:border-zinc-600 transition-colors"
+    <button
+      onClick={() => openDrawer(slug)}
+      className="group flex flex-col bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden hover:border-zinc-600 transition-colors text-left w-full"
     >
       {/* Imagen */}
-      <div className="relative h-52 bg-zinc-800 overflow-hidden">
+      <div className="relative h-52 bg-zinc-800 overflow-hidden w-full">
+        <span className="absolute top-2 right-2 z-10 bg-amber-500 text-white text-xs font-bold px-2.5 py-1 rounded-full shadow-md">
+          Bs. {Number(price).toFixed(2)}
+        </span>
         {imageUrl ? (
           <Image
             src={imageUrl}
@@ -42,15 +49,12 @@ export default function ProductCard({ slug, name, price, imageUrl, category }: P
         <h3 className="text-white text-sm font-medium leading-snug line-clamp-2 flex-1">
           {name}
         </h3>
-        <div className="flex items-center justify-between mt-2">
-          <span className="text-green-400 font-semibold text-base">
-            S/ {Number(price).toFixed(2)}
-          </span>
-          <span className="text-xs text-zinc-500 group-hover:text-zinc-300 transition-colors">
-            Ver detalle →
+        <div className="mt-3">
+          <span className="inline-block w-full text-center bg-zinc-800 group-hover:bg-amber-500 text-zinc-400 group-hover:text-white text-xs font-medium py-2 rounded-lg transition-colors">
+            Ver detalle
           </span>
         </div>
       </div>
-    </Link>
+    </button>
   );
 }

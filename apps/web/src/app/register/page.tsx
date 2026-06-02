@@ -56,7 +56,7 @@ function RegisterContent() {
   return (
     <main
       className="min-h-screen flex items-center justify-center bg-cover bg-center"
-      style={{ backgroundImage: "url('/fondo-login.jpg')" }}
+      style={{ backgroundImage: "url('/fondo_login.webp')" }}
     >
       <div className="w-full max-w-sm px-4">
         <form
@@ -171,7 +171,7 @@ function RegisterContent() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-green-500 hover:bg-green-400 disabled:opacity-60 text-white font-semibold py-3 rounded-full transition-colors text-sm"
+            className="w-full bg-amber-500 hover:bg-amber-400 disabled:opacity-60 text-white font-semibold py-3 rounded-full transition-colors text-sm"
           >
             {loading ? "Creando cuenta..." : "Registrarme"}
           </button>

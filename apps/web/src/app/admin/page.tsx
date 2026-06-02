@@ -23,7 +23,7 @@ const STATUS_LABELS: Record<string, { label: string; color: string }> = {
   PENDING:   { label: "Pendiente",  color: "text-yellow-400 bg-yellow-400/10 border-yellow-400/30" },
   CONFIRMED: { label: "Confirmado", color: "text-blue-400 bg-blue-400/10 border-blue-400/30" },
   SHIPPED:   { label: "En camino",  color: "text-purple-400 bg-purple-400/10 border-purple-400/30" },
-  DELIVERED: { label: "Entregado",  color: "text-green-400 bg-green-400/10 border-green-400/30" },
+  DELIVERED: { label: "Entregado",  color: "text-amber-400 bg-amber-400/10 border-amber-400/30" },
   CANCELLED: { label: "Cancelado",  color: "text-red-400 bg-red-400/10 border-red-400/30" },
 };
 
@@ -59,7 +59,7 @@ export default function AdminDashboard() {
     ? [
         { label: "Total pedidos", value: stats.totalOrders, href: "/admin/pedidos", color: "text-blue-400" },
         { label: "Pedidos pendientes", value: stats.pendingOrders, href: "/admin/pedidos", color: "text-yellow-400" },
-        { label: "Productos", value: stats.totalProducts, href: "/admin/productos", color: "text-green-400" },
+        { label: "Productos", value: stats.totalProducts, href: "/admin/productos", color: "text-amber-400" },
         { label: "Categorías", value: stats.totalCategories, href: "/admin/categorias", color: "text-purple-400" },
       ]
     : [];
@@ -90,7 +90,7 @@ export default function AdminDashboard() {
       <div className="bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden">
         <div className="flex items-center justify-between px-5 py-4 border-b border-zinc-800">
           <h2 className="text-white font-semibold">Pedidos recientes</h2>
-          <Link href="/admin/pedidos" className="text-green-400 hover:text-green-300 text-sm transition-colors">
+          <Link href="/admin/pedidos" className="text-amber-400 hover:text-amber-300 text-sm transition-colors">
             Ver todos
           </Link>
         </div>
@@ -119,7 +119,7 @@ export default function AdminDashboard() {
                   <div className="flex items-center gap-3">
                     <span className="text-zinc-500 text-xs hidden sm:block">{date}</span>
                     <span className={`text-xs px-2 py-0.5 rounded-full border ${s.color}`}>{s.label}</span>
-                    <span className="text-white text-sm font-medium">S/ {order.total}</span>
+                    <span className="text-white text-sm font-medium">Bs. {order.total}</span>
                   </div>
                 </Link>
               );
@@ -131,7 +131,7 @@ export default function AdminDashboard() {
       {/* Quick links */}
       <div className="grid sm:grid-cols-3 gap-4">
         {[
-          { href: "/admin/productos/nuevo", label: "Agregar producto", color: "bg-green-500 hover:bg-green-400" },
+          { href: "/admin/productos/nuevo", label: "Agregar producto", color: "bg-amber-500 hover:bg-amber-400" },
           { href: "/admin/categorias/nueva", label: "Agregar categoría", color: "bg-zinc-700 hover:bg-zinc-600" },
           { href: "/", label: "Ver tienda", color: "bg-zinc-800 hover:bg-zinc-700" },
         ].map((btn) => (

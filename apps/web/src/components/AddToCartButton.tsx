@@ -55,7 +55,7 @@ export default function AddToCartButton({ productId, slug, inStock }: Props) {
       <button
         onClick={handleClick}
         disabled={loading}
-        className="flex-1 bg-green-500 hover:bg-green-400 disabled:opacity-60 text-white font-semibold py-3 rounded-full transition-colors text-sm"
+        className="flex-1 bg-amber-500 hover:bg-amber-400 disabled:opacity-60 text-white font-semibold py-3 rounded-full transition-colors text-sm"
       >
         {loading ? "Agregando..." : added ? "Agregado al carrito" : "Agregar al carrito"}
       </button>

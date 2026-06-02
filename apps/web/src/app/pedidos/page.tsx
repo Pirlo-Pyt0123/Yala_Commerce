@@ -12,7 +12,7 @@ const STATUS_LABELS: Record<string, { label: string; color: string }> = {
   PENDING:   { label: "Pendiente",  color: "text-yellow-400 bg-yellow-400/10 border-yellow-400/30" },
   CONFIRMED: { label: "Confirmado", color: "text-blue-400 bg-blue-400/10 border-blue-400/30" },
   SHIPPED:   { label: "En camino",  color: "text-purple-400 bg-purple-400/10 border-purple-400/30" },
-  DELIVERED: { label: "Entregado",  color: "text-green-400 bg-green-400/10 border-green-400/30" },
+  DELIVERED: { label: "Entregado",  color: "text-amber-400 bg-amber-400/10 border-amber-400/30" },
   CANCELLED: { label: "Cancelado",  color: "text-red-400 bg-red-400/10 border-red-400/30" },
 };
 
@@ -64,7 +64,7 @@ export default function PedidosPage() {
             <p className="text-zinc-500 text-lg">Aún no tienes pedidos</p>
             <Link
               href="/productos"
-              className="inline-block bg-green-500 hover:bg-green-400 text-white font-semibold px-8 py-3 rounded-full transition-colors text-sm"
+              className="inline-block bg-amber-500 hover:bg-amber-400 text-white font-semibold px-8 py-3 rounded-full transition-colors text-sm"
             >
               Ver productos
             </Link>
@@ -85,7 +85,7 @@ export default function PedidosPage() {
                   className="flex items-center justify-between gap-4 bg-zinc-900 border border-zinc-800 hover:border-zinc-700 rounded-2xl p-5 transition-colors group"
                 >
                   <div className="space-y-1">
-                    <p className="text-white font-medium text-sm group-hover:text-green-400 transition-colors">
+                    <p className="text-white font-medium text-sm group-hover:text-amber-400 transition-colors">
                       Pedido #{order.id}
                     </p>
                     <p className="text-zinc-500 text-xs">
@@ -97,7 +97,7 @@ export default function PedidosPage() {
                     <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium border ${statusInfo.color}`}>
                       {statusInfo.label}
                     </span>
-                    <span className="text-white font-semibold text-sm">S/ {order.total}</span>
+                    <span className="text-white font-semibold text-sm">Bs. {order.total}</span>
                     <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 text-zinc-600 group-hover:text-zinc-400 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                     </svg>

@@ -83,7 +83,7 @@ export default function CategoryForm({ categoryId }: Props) {
         <input
           name="name" value={form.name} onChange={handleChange} required
           placeholder="Ej: Whisky"
-          className="w-full bg-zinc-800 border border-zinc-700 rounded-xl px-4 py-2.5 text-white text-sm placeholder-zinc-600 focus:outline-none focus:border-green-500 transition-colors"
+          className="w-full bg-zinc-800 border border-zinc-700 rounded-xl px-4 py-2.5 text-white text-sm placeholder-zinc-600 focus:outline-none focus:border-amber-500 transition-colors"
         />
       </div>
 
@@ -92,7 +92,7 @@ export default function CategoryForm({ categoryId }: Props) {
         <textarea
           name="description" value={form.description} onChange={handleChange} rows={3}
           placeholder="Descripción de la categoría..."
-          className="w-full bg-zinc-800 border border-zinc-700 rounded-xl px-4 py-2.5 text-white text-sm placeholder-zinc-600 focus:outline-none focus:border-green-500 transition-colors resize-none"
+          className="w-full bg-zinc-800 border border-zinc-700 rounded-xl px-4 py-2.5 text-white text-sm placeholder-zinc-600 focus:outline-none focus:border-amber-500 transition-colors resize-none"
         />
       </div>
 
@@ -100,7 +100,7 @@ export default function CategoryForm({ categoryId }: Props) {
         <input
           type="checkbox" name="isActive" checked={form.isActive}
           onChange={(e) => setForm((prev) => ({ ...prev, isActive: e.target.checked }))}
-          className="w-4 h-4 accent-green-500"
+          className="w-4 h-4 accent-amber-500"
         />
         <span className="text-zinc-400 text-sm">Categoría activa (visible en la tienda)</span>
       </label>
@@ -112,7 +112,7 @@ export default function CategoryForm({ categoryId }: Props) {
       <div className="flex gap-3 pt-2">
         <button
           type="submit" disabled={saving}
-          className="flex-1 bg-green-500 hover:bg-green-400 disabled:opacity-60 text-white font-semibold py-3 rounded-full text-sm transition-colors"
+          className="flex-1 bg-amber-500 hover:bg-amber-400 disabled:opacity-60 text-white font-semibold py-3 rounded-full text-sm transition-colors"
         >
           {saving ? "Guardando..." : isEdit ? "Guardar cambios" : "Crear categoría"}
         </button>

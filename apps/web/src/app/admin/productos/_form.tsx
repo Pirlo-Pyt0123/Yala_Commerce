@@ -127,14 +127,14 @@ export default function ProductForm({ productId }: Props) {
           <input
             name="name" value={form.name} onChange={handleChange} required
             placeholder="Ej: Johnnie Walker Black Label 750ml"
-            className="w-full bg-zinc-800 border border-zinc-700 rounded-xl px-4 py-2.5 text-white text-sm placeholder-zinc-600 focus:outline-none focus:border-green-500 transition-colors"
+            className="w-full bg-zinc-800 border border-zinc-700 rounded-xl px-4 py-2.5 text-white text-sm placeholder-zinc-600 focus:outline-none focus:border-amber-500 transition-colors"
           />
         </div>
         <div className="space-y-1.5">
           <label className="text-zinc-400 text-sm">Categoría *</label>
           <select
             name="categoryId" value={form.categoryId} onChange={handleChange} required
-            className="w-full bg-zinc-800 border border-zinc-700 rounded-xl px-4 py-2.5 text-white text-sm focus:outline-none focus:border-green-500 transition-colors"
+            className="w-full bg-zinc-800 border border-zinc-700 rounded-xl px-4 py-2.5 text-white text-sm focus:outline-none focus:border-amber-500 transition-colors"
           >
             <option value="">Selecciona una categoría</option>
             {categories.map((c) => (
@@ -149,7 +149,7 @@ export default function ProductForm({ productId }: Props) {
         <textarea
           name="description" value={form.description} onChange={handleChange} rows={3}
           placeholder="Descripción del producto..."
-          className="w-full bg-zinc-800 border border-zinc-700 rounded-xl px-4 py-2.5 text-white text-sm placeholder-zinc-600 focus:outline-none focus:border-green-500 transition-colors resize-none"
+          className="w-full bg-zinc-800 border border-zinc-700 rounded-xl px-4 py-2.5 text-white text-sm placeholder-zinc-600 focus:outline-none focus:border-amber-500 transition-colors resize-none"
         />
       </div>
 
@@ -159,7 +159,7 @@ export default function ProductForm({ productId }: Props) {
           <input
             name="price" value={form.price} onChange={handleChange} required
             type="number" min="0" step="0.01" placeholder="0.00"
-            className="w-full bg-zinc-800 border border-zinc-700 rounded-xl px-4 py-2.5 text-white text-sm placeholder-zinc-600 focus:outline-none focus:border-green-500 transition-colors"
+            className="w-full bg-zinc-800 border border-zinc-700 rounded-xl px-4 py-2.5 text-white text-sm placeholder-zinc-600 focus:outline-none focus:border-amber-500 transition-colors"
           />
         </div>
         <div className="space-y-1.5">
@@ -167,7 +167,7 @@ export default function ProductForm({ productId }: Props) {
           <input
             name="stock" value={form.stock} onChange={handleChange} required
             type="number" min="0" step="1" placeholder="0"
-            className="w-full bg-zinc-800 border border-zinc-700 rounded-xl px-4 py-2.5 text-white text-sm placeholder-zinc-600 focus:outline-none focus:border-green-500 transition-colors"
+            className="w-full bg-zinc-800 border border-zinc-700 rounded-xl px-4 py-2.5 text-white text-sm placeholder-zinc-600 focus:outline-none focus:border-amber-500 transition-colors"
           />
         </div>
       </div>
@@ -177,7 +177,7 @@ export default function ProductForm({ productId }: Props) {
         <input
           name="imageUrl" value={form.imageUrl} onChange={handleChange}
           type="url" placeholder="https://..."
-          className="w-full bg-zinc-800 border border-zinc-700 rounded-xl px-4 py-2.5 text-white text-sm placeholder-zinc-600 focus:outline-none focus:border-green-500 transition-colors"
+          className="w-full bg-zinc-800 border border-zinc-700 rounded-xl px-4 py-2.5 text-white text-sm placeholder-zinc-600 focus:outline-none focus:border-amber-500 transition-colors"
         />
         {form.imageUrl && (
           <div className="mt-2 w-20 h-20 bg-zinc-800 rounded-xl overflow-hidden relative border border-zinc-700">
@@ -191,7 +191,7 @@ export default function ProductForm({ productId }: Props) {
           type="checkbox" name="isActive"
           checked={form.isActive}
           onChange={(e) => setForm((prev) => ({ ...prev, isActive: e.target.checked }))}
-          className="w-4 h-4 accent-green-500"
+          className="w-4 h-4 accent-amber-500"
         />
         <span className="text-zinc-400 text-sm">Producto activo (visible en la tienda)</span>
       </label>
@@ -205,7 +205,7 @@ export default function ProductForm({ productId }: Props) {
       <div className="flex gap-3 pt-2">
         <button
           type="submit" disabled={saving}
-          className="flex-1 bg-green-500 hover:bg-green-400 disabled:opacity-60 text-white font-semibold py-3 rounded-full text-sm transition-colors"
+          className="flex-1 bg-amber-500 hover:bg-amber-400 disabled:opacity-60 text-white font-semibold py-3 rounded-full text-sm transition-colors"
         >
           {saving ? "Guardando..." : isEdit ? "Guardar cambios" : "Crear producto"}
         </button>

@@ -124,8 +124,11 @@ export default function CarritoPage() {
           {!empty && (
             <button
               onClick={clearCart}
-              className="text-zinc-500 hover:text-red-400 text-sm transition-colors"
+              className="flex items-center gap-2 border border-zinc-700 hover:border-red-500/50 text-zinc-400 hover:text-red-400 text-sm font-medium px-4 py-2 rounded-full transition-colors"
             >
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+              </svg>
               Vaciar carrito
             </button>
           )}
@@ -136,7 +139,7 @@ export default function CarritoPage() {
             <p className="text-zinc-500 text-lg">Tu carrito está vacío</p>
             <Link
               href="/productos"
-              className="inline-block bg-green-500 hover:bg-green-400 text-white font-semibold px-8 py-3 rounded-full transition-colors text-sm"
+              className="inline-block bg-amber-500 hover:bg-amber-400 text-white font-semibold px-8 py-3 rounded-full transition-colors text-sm"
             >
               Ver productos
             </Link>
@@ -172,12 +175,12 @@ export default function CarritoPage() {
                   {/* Info */}
                   <div className="flex-1 min-w-0">
                     <Link href={`/productos/${item.product.slug}`}>
-                      <p className="text-white text-sm font-medium line-clamp-2 hover:text-green-400 transition-colors">
+                      <p className="text-white text-sm font-medium line-clamp-2 hover:text-amber-400 transition-colors">
                         {item.product.name}
                       </p>
                     </Link>
-                    <p className="text-green-400 font-semibold mt-1">
-                      S/ {Number(item.product.price).toFixed(2)}
+                    <p className="text-amber-400 font-semibold mt-1">
+                      Bs. {Number(item.product.price).toFixed(2)}
                     </p>
 
                     {/* Cantidad */}
@@ -202,9 +205,12 @@ export default function CarritoPage() {
                       <button
                         onClick={() => removeItem(item.productId)}
                         disabled={updating === item.productId}
-                        className="ml-2 text-zinc-600 hover:text-red-400 transition-colors text-xs"
+                        className="ml-2 w-7 h-7 rounded-full flex items-center justify-center text-zinc-600 hover:text-red-400 hover:bg-red-400/10 disabled:opacity-40 transition-colors"
+                        aria-label="Eliminar producto"
                       >
-                        Eliminar
+                        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
+                          <path strokeLinecap="round" strokeLinejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                        </svg>
                       </button>
                     </div>
                   </div>
@@ -212,7 +218,7 @@ export default function CarritoPage() {
                   {/* Subtotal item */}
                   <div className="shrink-0 text-right">
                     <p className="text-white font-semibold text-sm">
-                      S/ {(Number(item.product.price) * item.quantity).toFixed(2)}
+                      Bs. {(Number(item.product.price) * item.quantity).toFixed(2)}
                     </p>
                   </div>
                 </div>
@@ -226,26 +232,26 @@ export default function CarritoPage() {
                 <div className="space-y-2 text-sm">
                   <div className="flex justify-between text-zinc-400">
                     <span>Productos ({cart.totalItems})</span>
-                    <span>S/ {cart.subtotal}</span>
+                    <span>Bs. {cart.subtotal}</span>
                   </div>
                   <div className="flex justify-between text-zinc-400">
                     <span>Envío</span>
-                    <span className="text-green-400">Por calcular</span>
+                    <span className="text-amber-400">Por calcular</span>
                   </div>
                 </div>
                 <div className="border-t border-zinc-800 pt-3 flex justify-between text-white font-semibold">
                   <span>Total</span>
-                  <span>S/ {cart.subtotal}</span>
+                  <span>Bs. {cart.subtotal}</span>
                 </div>
                 <Link
                   href="/checkout"
-                  className="block w-full bg-green-500 hover:bg-green-400 text-white font-semibold py-3 rounded-full transition-colors text-sm text-center"
+                  className="block w-full bg-amber-500 hover:bg-amber-400 text-white font-semibold py-3 rounded-full transition-colors text-sm text-center"
                 >
                   Proceder al pago
                 </Link>
                 <Link
                   href="/productos"
-                  className="block text-center text-zinc-500 hover:text-zinc-300 text-xs transition-colors"
+                  className="block w-full text-center border border-zinc-700 hover:border-zinc-500 text-zinc-400 hover:text-white font-medium py-3 rounded-full transition-colors text-sm"
                 >
                   Seguir comprando
                 </Link>

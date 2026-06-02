@@ -12,7 +12,7 @@ const STATUS_LABELS: Record<string, { label: string; color: string }> = {
   PENDING:   { label: "Pendiente",  color: "text-yellow-400 bg-yellow-400/10 border-yellow-400/30" },
   CONFIRMED: { label: "Confirmado", color: "text-blue-400 bg-blue-400/10 border-blue-400/30" },
   SHIPPED:   { label: "En camino",  color: "text-purple-400 bg-purple-400/10 border-purple-400/30" },
-  DELIVERED: { label: "Entregado",  color: "text-green-400 bg-green-400/10 border-green-400/30" },
+  DELIVERED: { label: "Entregado",  color: "text-amber-400 bg-amber-400/10 border-amber-400/30" },
   CANCELLED: { label: "Cancelado",  color: "text-red-400 bg-red-400/10 border-red-400/30" },
 };
 const STATUS_LABEL_MAP: Record<string, string> = {
@@ -108,7 +108,7 @@ export default function AdminPedidoDetallePage() {
           <select
             value={status}
             onChange={(e) => setStatus(e.target.value)}
-            className="flex-1 bg-zinc-800 border border-zinc-700 rounded-xl px-4 py-2.5 text-white text-sm focus:outline-none focus:border-green-500 transition-colors"
+            className="flex-1 bg-zinc-800 border border-zinc-700 rounded-xl px-4 py-2.5 text-white text-sm focus:outline-none focus:border-amber-500 transition-colors"
           >
             {STATUS_OPTIONS.map((s) => (
               <option key={s} value={s}>{STATUS_LABEL_MAP[s]}</option>
@@ -117,7 +117,7 @@ export default function AdminPedidoDetallePage() {
           <button
             onClick={handleStatusChange}
             disabled={saving || status === order.status}
-            className="px-5 py-2.5 bg-green-500 hover:bg-green-400 disabled:opacity-50 text-white font-medium rounded-xl text-sm transition-colors"
+            className="px-5 py-2.5 bg-amber-500 hover:bg-amber-400 disabled:opacity-50 text-white font-medium rounded-xl text-sm transition-colors"
           >
             {saving ? "..." : "Actualizar"}
           </button>
@@ -160,15 +160,15 @@ export default function AdminPedidoDetallePage() {
               </div>
               <div className="flex-1 min-w-0">
                 <p className="text-zinc-300 text-sm line-clamp-2">{item.product.name}</p>
-                <p className="text-zinc-500 text-xs mt-1">{item.quantity} x S/ {item.price}</p>
+                <p className="text-zinc-500 text-xs mt-1">{item.quantity} x Bs. {item.price}</p>
               </div>
-              <p className="text-white font-semibold text-sm shrink-0">S/ {item.subtotal}</p>
+              <p className="text-white font-semibold text-sm shrink-0">Bs. {item.subtotal}</p>
             </div>
           ))}
         </div>
         <div className="border-t border-zinc-800 pt-4 flex justify-between text-white font-bold">
           <span>Total</span>
-          <span>S/ {order.total}</span>
+          <span>Bs. {order.total}</span>
         </div>
       </div>
     </div>

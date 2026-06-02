@@ -4,6 +4,7 @@ import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ProductCard from "@/components/ProductCard";
+import HeroCarousel from "@/components/HeroCarousel";
 
 const API = process.env.NEXT_PUBLIC_API_URL;
 
@@ -24,13 +25,13 @@ type Product = {
   category: { name: string; slug: string };
 };
 
-const categoryColor: Record<string, string> = {
-  whisky:  "bg-amber-900/40 text-amber-400",
-  vino:    "bg-rose-900/40 text-rose-400",
-  cerveza: "bg-yellow-900/40 text-yellow-400",
-  ron:     "bg-orange-900/40 text-orange-400",
-  pisco:   "bg-purple-900/40 text-purple-400",
-  vodka:   "bg-sky-900/40 text-sky-400",
+const categoryColor: Record<string, { border: string; bg: string; accent: string }> = {
+  whisky:  { border: "border-amber-500/40",  bg: "bg-amber-950/40",  accent: "text-amber-400"  },
+  vino:    { border: "border-rose-500/40",   bg: "bg-rose-950/40",   accent: "text-rose-400"   },
+  cerveza: { border: "border-yellow-500/40", bg: "bg-yellow-950/40", accent: "text-yellow-400" },
+  ron:     { border: "border-orange-500/40", bg: "bg-orange-950/40", accent: "text-orange-400" },
+  pisco:   { border: "border-purple-500/40", bg: "bg-purple-950/40", accent: "text-purple-400" },
+  vodka:   { border: "border-sky-500/40",    bg: "bg-sky-950/40",    accent: "text-sky-400"    },
 };
 
 async function getCategories(): Promise<Category[]> {
@@ -64,60 +65,33 @@ export default async function Home() {
     <div className="min-h-screen bg-zinc-950">
       <Navbar />
 
-      {/* Hero */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-zinc-900 via-zinc-950 to-zinc-900 py-24 px-4">
-        <div
-          className="absolute inset-0 opacity-10"
-          style={{
-            backgroundImage:
-              "radial-gradient(circle at 20% 50%, #22c55e 0%, transparent 50%), radial-gradient(circle at 80% 20%, #16a34a 0%, transparent 40%)",
-          }}
-        />
-        <div className="relative max-w-3xl mx-auto text-center space-y-6">
-          <p className="text-green-400 text-sm font-medium tracking-widest uppercase">
-            Bienvenido a
-          </p>
-          <h1 className="text-5xl md:text-7xl font-bold text-white tracking-tight">
-            Licorería
-          </h1>
-          <p className="text-zinc-400 text-lg max-w-xl mx-auto">
-            La mejor selección de whiskys, vinos, cervezas, rones, piscos y vodkas con entrega a domicilio.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-3 justify-center pt-2">
-            <Link
-              href="/productos"
-              className="bg-green-500 hover:bg-green-400 text-white font-semibold px-8 py-3 rounded-full transition-colors"
-            >
-              Ver catálogo
-            </Link>
-            <Link
-              href="/register"
-              className="border border-zinc-700 hover:border-zinc-500 text-zinc-300 hover:text-white font-semibold px-8 py-3 rounded-full transition-colors"
-            >
-              Crear cuenta
-            </Link>
-          </div>
-        </div>
-      </section>
+      <HeroCarousel />
 
       {/* Categorías */}
       {categories.length > 0 && (
-        <section className="max-w-6xl mx-auto px-4 py-16">
-          <h2 className="text-white text-2xl font-bold mb-8">Categorías</h2>
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3">
-            {categories.map((cat) => (
-              <Link
-                key={cat.id}
-                href={`/productos?category=${cat.slug}`}
-                className="flex flex-col items-center gap-2 bg-zinc-900 border border-zinc-800 hover:border-zinc-600 rounded-2xl p-5 transition-colors"
-              >
-                <span className={`text-xs font-bold uppercase tracking-widest px-3 py-1 rounded-full ${categoryColor[cat.slug] ?? "bg-zinc-800 text-zinc-400"}`}>
-                  {cat.name}
-                </span>
-                <span className="text-white text-sm font-medium">{cat.name}</span>
-                <span className="text-zinc-500 text-xs">{cat._count.products} productos</span>
-              </Link>
-            ))}
+        <section className="py-12">
+          <div className="max-w-6xl mx-auto px-4 mb-6">
+            <h2 className="text-white text-2xl font-bold">Categorías</h2>
+          </div>
+          <div className="flex gap-3 overflow-x-auto px-4 pb-3 max-w-6xl mx-auto scrollbar-hide snap-x snap-mandatory">
+            {categories.map((cat) => {
+              const style = categoryColor[cat.slug] ?? { border: "border-zinc-700", bg: "bg-zinc-800/50", accent: "text-zinc-400" };
+              return (
+                <Link
+                  key={cat.id}
+                  href={`/productos?category=${cat.slug}`}
+                  className={`snap-start shrink-0 flex flex-col justify-between w-36 h-36 rounded-2xl p-4 border ${style.border} ${style.bg} hover:brightness-110 transition-all`}
+                >
+                  <span className={`text-4xl font-black ${style.accent}`}>
+                    {cat.name.charAt(0)}
+                  </span>
+                  <div>
+                    <p className="text-white font-semibold text-sm">{cat.name}</p>
+                    <p className="text-zinc-500 text-xs mt-0.5">{cat._count.products} productos</p>
+                  </div>
+                </Link>
+              );
+            })}
           </div>
         </section>
       )}
@@ -129,7 +103,7 @@ export default async function Home() {
             <h2 className="text-white text-2xl font-bold">Productos destacados</h2>
             <Link
               href="/productos"
-              className="text-green-400 hover:text-green-300 text-sm transition-colors"
+              className="border border-amber-500/40 hover:border-amber-500 text-amber-400 hover:text-amber-300 text-sm font-medium px-4 py-2 rounded-full transition-colors"
             >
               Ver todos →
             </Link>

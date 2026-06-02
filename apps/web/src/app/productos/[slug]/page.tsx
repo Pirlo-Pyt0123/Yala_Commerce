@@ -47,7 +47,7 @@ export default async function ProductoDetalle({
       <div className="min-h-screen bg-zinc-950 flex flex-col items-center justify-center gap-4">
         <p className="text-zinc-400 text-lg">No se pudo cargar el producto.</p>
         <p className="text-zinc-600 text-sm">El servidor está iniciando, intenta de nuevo en unos segundos.</p>
-        <a href={`/productos/${slug}`} className="text-green-400 hover:text-green-300 text-sm transition-colors">
+        <a href={`/productos/${slug}`} className="text-amber-400 hover:text-amber-300 text-sm transition-colors">
           Reintentar
         </a>
       </div>
@@ -105,7 +105,7 @@ export default async function ProductoDetalle({
             {/* Categoría */}
             <Link
               href={`/productos?category=${product.category.slug}`}
-              className="text-green-400 text-sm font-medium hover:text-green-300 transition-colors w-fit"
+              className="text-amber-400 text-sm font-medium hover:text-amber-300 transition-colors w-fit"
             >
               {product.category.name}
             </Link>
@@ -117,8 +117,8 @@ export default async function ProductoDetalle({
 
             {/* Precio */}
             <div className="flex items-baseline gap-2">
-              <span className="text-green-400 text-4xl font-bold">
-                S/ {Number(product.price).toFixed(2)}
+              <span className="text-amber-400 text-4xl font-bold">
+                Bs. {Number(product.price).toFixed(2)}
               </span>
             </div>
 
@@ -131,7 +131,7 @@ export default async function ProductoDetalle({
 
             {/* Stock */}
             <div className="flex items-center gap-2">
-              <span className={`w-2 h-2 rounded-full ${inStock ? "bg-green-500" : "bg-red-500"}`} />
+              <span className={`w-2 h-2 rounded-full ${inStock ? "bg-amber-500" : "bg-red-500"}`} />
               <span className={`text-sm ${inStock ? "text-zinc-400" : "text-red-400"}`}>
                 {inStock ? `${product.stock} unidades disponibles` : "Sin stock"}
               </span>
