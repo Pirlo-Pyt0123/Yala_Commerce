@@ -63,7 +63,7 @@ export default function AdminCategoriasPage() {
         </div>
         <Link
           href="/admin/categorias/nueva"
-          className="bg-green-500 hover:bg-green-400 text-white font-semibold px-5 py-2.5 rounded-full text-sm transition-colors"
+          className="bg-amber-500 hover:bg-amber-400 text-white font-semibold px-5 py-2.5 rounded-full text-sm transition-colors"
         >
           + Nueva categoría
         </Link>
@@ -106,7 +106,7 @@ export default function AdminCategoriasPage() {
                       disabled={toggling === cat.id}
                       className={`text-xs px-2.5 py-1 rounded-full border transition-colors ${
                         cat.isActive
-                          ? "text-green-400 bg-green-400/10 border-green-400/30 hover:bg-green-400/20"
+                          ? "text-amber-400 bg-amber-400/10 border-amber-400/30 hover:bg-amber-400/20"
                           : "text-zinc-500 bg-zinc-500/10 border-zinc-500/30 hover:bg-zinc-500/20"
                       }`}
                     >

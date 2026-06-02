@@ -14,7 +14,7 @@ const STATUS_LABELS: Record<string, { label: string; color: string }> = {
   PENDING:   { label: "Pendiente",   color: "text-yellow-400 bg-yellow-400/10 border-yellow-400/30" },
   CONFIRMED: { label: "Confirmado",  color: "text-blue-400 bg-blue-400/10 border-blue-400/30" },
   SHIPPED:   { label: "En camino",   color: "text-purple-400 bg-purple-400/10 border-purple-400/30" },
-  DELIVERED: { label: "Entregado",   color: "text-green-400 bg-green-400/10 border-green-400/30" },
+  DELIVERED: { label: "Entregado",   color: "text-amber-400 bg-amber-400/10 border-amber-400/30" },
   CANCELLED: { label: "Cancelado",   color: "text-red-400 bg-red-400/10 border-red-400/30" },
 };
 
@@ -99,14 +99,14 @@ function PedidoContent() {
 
         {/* Success banner (solo cuando viene del checkout) */}
         {isNew && (
-          <div className="bg-green-500/10 border border-green-500/30 rounded-2xl px-6 py-5 flex items-start gap-4">
-            <div className="shrink-0 w-10 h-10 rounded-full bg-green-500/20 flex items-center justify-center">
-              <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <div className="bg-amber-500/10 border border-amber-500/30 rounded-2xl px-6 py-5 flex items-start gap-4">
+            <div className="shrink-0 w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
               </svg>
             </div>
             <div>
-              <p className="text-green-400 font-semibold">Pedido realizado con éxito</p>
+              <p className="text-amber-400 font-semibold">Pedido realizado con éxito</p>
               <p className="text-zinc-400 text-sm mt-1">
                 Te contactaremos pronto para coordinar la entrega.
               </p>
@@ -152,13 +152,13 @@ function PedidoContent() {
               </div>
               <div className="flex justify-between">
                 <span className="text-zinc-500">Estado</span>
-                <span className={order.paymentStatus === "PAID" ? "text-green-400" : "text-yellow-400"}>
+                <span className={order.paymentStatus === "PAID" ? "text-amber-400" : "text-yellow-400"}>
                   {order.paymentStatus === "PAID" ? "Pagado" : "Pendiente"}
                 </span>
               </div>
               <div className="flex justify-between border-t border-zinc-800 pt-2">
                 <span className="text-zinc-400 font-medium">Total</span>
-                <span className="text-white font-semibold">S/ {order.total}</span>
+                <span className="text-white font-semibold">Bs. {order.total}</span>
               </div>
             </div>
           </div>
@@ -191,17 +191,17 @@ function PedidoContent() {
                     <p className="text-zinc-300 text-sm hover:text-white transition-colors line-clamp-2">{item.product.name}</p>
                   </Link>
                   <p className="text-zinc-500 text-xs mt-1">
-                    {item.quantity} x S/ {item.price}
+                    {item.quantity} x Bs. {item.price}
                   </p>
                 </div>
-                <p className="text-white text-sm font-semibold shrink-0">S/ {item.subtotal}</p>
+                <p className="text-white text-sm font-semibold shrink-0">Bs. {item.subtotal}</p>
               </div>
             ))}
           </div>
 
           <div className="border-t border-zinc-800 pt-4 flex justify-between text-white font-semibold">
             <span>Total</span>
-            <span>S/ {order.total}</span>
+            <span>Bs. {order.total}</span>
           </div>
         </div>
 
@@ -215,7 +215,7 @@ function PedidoContent() {
           </Link>
           <Link
             href="/productos"
-            className="flex-1 text-center bg-green-500 hover:bg-green-400 text-white font-semibold py-3 rounded-full transition-colors text-sm"
+            className="flex-1 text-center bg-amber-500 hover:bg-amber-400 text-white font-semibold py-3 rounded-full transition-colors text-sm"
           >
             Seguir comprando
           </Link>

@@ -91,7 +91,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
               href={item.href}
               className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-colors ${
                 isActive(item.href, item.exact)
-                  ? "bg-green-500/15 text-green-400 font-medium"
+                  ? "bg-amber-500/15 text-amber-400 font-medium"
                   : "text-zinc-400 hover:text-white hover:bg-zinc-800"
               }`}
             >
@@ -142,7 +142,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                   onClick={() => setSidebarOpen(false)}
                   className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-colors ${
                     isActive(item.href, item.exact)
-                      ? "bg-green-500/15 text-green-400 font-medium"
+                      ? "bg-amber-500/15 text-amber-400 font-medium"
                       : "text-zinc-400 hover:text-white hover:bg-zinc-800"
                   }`}
                 >

@@ -18,7 +18,7 @@ const STATUS_LABELS: Record<string, { label: string; color: string }> = {
   PENDING:   { label: "Pendiente",  color: "text-yellow-400 bg-yellow-400/10 border-yellow-400/30" },
   CONFIRMED: { label: "Confirmado", color: "text-blue-400 bg-blue-400/10 border-blue-400/30" },
   SHIPPED:   { label: "En camino",  color: "text-purple-400 bg-purple-400/10 border-purple-400/30" },
-  DELIVERED: { label: "Entregado",  color: "text-green-400 bg-green-400/10 border-green-400/30" },
+  DELIVERED: { label: "Entregado",  color: "text-amber-400 bg-amber-400/10 border-amber-400/30" },
   CANCELLED: { label: "Cancelado",  color: "text-red-400 bg-red-400/10 border-red-400/30" },
 };
 
@@ -96,7 +96,7 @@ export default function AdminPedidosPage() {
               onClick={() => setStatusFilter(opt.value)}
               className={`px-3 py-1.5 rounded-full text-xs font-medium border transition-colors ${
                 statusFilter === opt.value
-                  ? "bg-green-500/15 text-green-400 border-green-500/30"
+                  ? "bg-amber-500/15 text-amber-400 border-amber-500/30"
                   : "text-zinc-400 border-zinc-700 hover:border-zinc-600"
               }`}
             >
@@ -134,7 +134,7 @@ export default function AdminPedidosPage() {
                   return (
                     <tr key={order.id} className="hover:bg-zinc-800/40 transition-colors">
                       <td className="px-4 py-3">
-                        <Link href={`/admin/pedidos/${order.id}`} className="text-white font-medium text-sm hover:text-green-400 transition-colors">
+                        <Link href={`/admin/pedidos/${order.id}`} className="text-white font-medium text-sm hover:text-amber-400 transition-colors">
                           #{order.id}
                         </Link>
                       </td>
@@ -149,7 +149,7 @@ export default function AdminPedidosPage() {
                         <span className="text-zinc-400 text-sm">{totalItems}</span>
                       </td>
                       <td className="px-4 py-3 text-right">
-                        <span className="text-white font-semibold text-sm">S/ {order.total}</span>
+                        <span className="text-white font-semibold text-sm">Bs. {order.total}</span>
                       </td>
                       <td className="px-4 py-3 text-center">
                         {updating === order.id ? (

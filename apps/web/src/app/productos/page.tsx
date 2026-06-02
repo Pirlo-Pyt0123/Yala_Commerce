@@ -132,7 +132,7 @@ function ProductosContent() {
             onClick={() => updateParams({ category: null, page: null })}
             className={`px-4 py-1.5 rounded-full text-sm transition-colors ${
               !category
-                ? "bg-green-500 text-white"
+                ? "bg-amber-500 text-white"
                 : "bg-zinc-900 border border-zinc-800 text-zinc-400 hover:text-white hover:border-zinc-600"
             }`}
           >
@@ -144,7 +144,7 @@ function ProductosContent() {
               onClick={() => updateParams({ category: cat.slug, page: null })}
               className={`px-4 py-1.5 rounded-full text-sm transition-colors ${
                 category === cat.slug
-                  ? "bg-green-500 text-white"
+                  ? "bg-amber-500 text-white"
                   : "bg-zinc-900 border border-zinc-800 text-zinc-400 hover:text-white hover:border-zinc-600"
               }`}
             >
@@ -165,7 +165,7 @@ function ProductosContent() {
             <p className="text-zinc-500 text-lg">No se encontraron productos</p>
             <button
               onClick={() => updateParams({ search: null, category: null, page: null })}
-              className="mt-4 text-green-400 hover:text-green-300 text-sm"
+              className="mt-4 text-amber-400 hover:text-amber-300 text-sm"
             >
               Limpiar filtros
             </button>
