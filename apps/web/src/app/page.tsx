@@ -4,7 +4,7 @@ import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ProductCard from "@/components/ProductCard";
-import HeroCarousel from "@/components/HeroCarousel";
+import Hero from "@/components/Hero";
 
 const API = process.env.NEXT_PUBLIC_API_URL;
 
@@ -25,14 +25,6 @@ type Product = {
   category: { name: string; slug: string };
 };
 
-const categoryColor: Record<string, { border: string; bg: string; accent: string }> = {
-  whisky:  { border: "border-amber-500/40",  bg: "bg-amber-950/40",  accent: "text-amber-400"  },
-  vino:    { border: "border-rose-500/40",   bg: "bg-rose-950/40",   accent: "text-rose-400"   },
-  cerveza: { border: "border-yellow-500/40", bg: "bg-yellow-950/40", accent: "text-yellow-400" },
-  ron:     { border: "border-orange-500/40", bg: "bg-orange-950/40", accent: "text-orange-400" },
-  pisco:   { border: "border-purple-500/40", bg: "bg-purple-950/40", accent: "text-purple-400" },
-  vodka:   { border: "border-sky-500/40",    bg: "bg-sky-950/40",    accent: "text-sky-400"    },
-};
 
 async function getCategories(): Promise<Category[]> {
   try {
@@ -65,45 +57,52 @@ export default async function Home() {
     <div className="min-h-screen bg-zinc-950">
       <Navbar />
 
-      <HeroCarousel />
+      <Hero />
 
       {/* Categorías */}
       {categories.length > 0 && (
-        <section className="py-12">
-          <div className="max-w-6xl mx-auto px-4 mb-6">
-            <h2 className="text-white text-2xl font-bold">Categorías</h2>
+        <section className="py-14">
+          <div className="max-w-6xl mx-auto px-4 mb-8">
+            <div className="flex items-center gap-3">
+              <div className="w-1 h-6 rounded-full" style={{ background: "#aaff00", boxShadow: "0 0 8px #aaff00, 0 0 20px rgba(170,255,0,0.4)" }} />
+              <h2 className="text-white text-2xl font-bold">Categorías</h2>
+            </div>
           </div>
-          <div className="flex gap-3 overflow-x-auto px-4 pb-3 max-w-6xl mx-auto scrollbar-hide snap-x snap-mandatory">
-            {categories.map((cat) => {
-              const style = categoryColor[cat.slug] ?? { border: "border-zinc-700", bg: "bg-zinc-800/50", accent: "text-zinc-400" };
-              return (
-                <Link
-                  key={cat.id}
-                  href={`/productos?category=${cat.slug}`}
-                  className={`snap-start shrink-0 flex flex-col justify-between w-36 h-36 rounded-2xl p-4 border ${style.border} ${style.bg} hover:brightness-110 transition-all`}
+          <div className="flex gap-4 overflow-x-auto px-4 pb-4 max-w-6xl mx-auto scrollbar-hide snap-x snap-mandatory">
+            {categories.map((cat) => (
+              <Link
+                key={cat.id}
+                href={`/productos?category=${cat.slug}`}
+                className="group snap-start shrink-0 flex flex-col justify-between w-40 h-44 rounded-2xl p-5 border border-zinc-800 bg-zinc-900 hover:border-[#aaff00]/50 hover:bg-[#aaff00]/5 transition-all duration-300"
+                style={{ boxShadow: "inset 0 1px 0 rgba(255,255,255,0.04)" }}
+              >
+                <span
+                  className="text-5xl font-black transition-all duration-300 group-hover:drop-shadow-[0_0_12px_rgba(170,255,0,0.8)]"
+                  style={{ color: "#aaff00" }}
                 >
-                  <span className={`text-4xl font-black ${style.accent}`}>
-                    {cat.name.charAt(0)}
-                  </span>
-                  <div>
-                    <p className="text-white font-semibold text-sm">{cat.name}</p>
-                    <p className="text-zinc-500 text-xs mt-0.5">{cat._count.products} productos</p>
-                  </div>
-                </Link>
-              );
-            })}
+                  {cat.name.charAt(0)}
+                </span>
+                <div>
+                  <p className="text-white font-semibold text-sm group-hover:text-[#aaff00] transition-colors duration-300">{cat.name}</p>
+                  <p className="text-zinc-500 text-xs mt-1">{cat._count.products} productos</p>
+                </div>
+              </Link>
+            ))}
           </div>
         </section>
       )}
 
       {/* Productos destacados */}
       {products.length > 0 && (
-        <section className="max-w-6xl mx-auto px-4 pb-20">
+        <section className="max-w-6xl mx-auto px-4 pb-24">
           <div className="flex items-center justify-between mb-8">
-            <h2 className="text-white text-2xl font-bold">Productos destacados</h2>
+            <div className="flex items-center gap-3">
+              <div className="w-1 h-6 rounded-full" style={{ background: "#aaff00", boxShadow: "0 0 8px #aaff00, 0 0 20px rgba(170,255,0,0.4)" }} />
+              <h2 className="text-white text-2xl font-bold">Productos destacados</h2>
+            </div>
             <Link
               href="/productos"
-              className="border border-amber-500/40 hover:border-amber-500 text-amber-400 hover:text-amber-300 text-sm font-medium px-4 py-2 rounded-full transition-colors"
+              className="border border-[#aaff00]/30 hover:border-[#aaff00]/70 text-[#aaff00] text-sm font-medium px-4 py-2 rounded-full transition-all hover:bg-[#aaff00]/10 hover:shadow-[0_0_12px_rgba(170,255,0,0.2)]"
             >
               Ver todos →
             </Link>

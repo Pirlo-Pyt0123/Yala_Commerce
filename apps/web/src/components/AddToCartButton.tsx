@@ -34,6 +34,7 @@ export default function AddToCartButton({ productId, slug, inStock }: Props) {
 
       if (res.ok) {
         setAdded(true);
+        window.dispatchEvent(new Event("cart-updated"));
         setTimeout(() => setAdded(false), 2000);
       }
     } catch {

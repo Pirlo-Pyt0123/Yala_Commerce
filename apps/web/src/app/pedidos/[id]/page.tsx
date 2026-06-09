@@ -14,7 +14,7 @@ const STATUS_LABELS: Record<string, { label: string; color: string }> = {
   PENDING:   { label: "Pendiente",   color: "text-yellow-400 bg-yellow-400/10 border-yellow-400/30" },
   CONFIRMED: { label: "Confirmado",  color: "text-blue-400 bg-blue-400/10 border-blue-400/30" },
   SHIPPED:   { label: "En camino",   color: "text-purple-400 bg-purple-400/10 border-purple-400/30" },
-  DELIVERED: { label: "Entregado",   color: "text-amber-400 bg-amber-400/10 border-amber-400/30" },
+  DELIVERED: { label: "Entregado",   color: "text-[#aaff00] bg-[#aaff00]/10 border-[#aaff00]/30" },
   CANCELLED: { label: "Cancelado",   color: "text-red-400 bg-red-400/10 border-red-400/30" },
 };
 
@@ -99,14 +99,14 @@ function PedidoContent() {
 
         {/* Success banner (solo cuando viene del checkout) */}
         {isNew && (
-          <div className="bg-amber-500/10 border border-amber-500/30 rounded-2xl px-6 py-5 flex items-start gap-4">
-            <div className="shrink-0 w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center">
-              <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <div className="rounded-2xl px-6 py-5 flex items-start gap-4" style={{ background: "rgba(170,255,0,0.07)", border: "1px solid rgba(170,255,0,0.25)" }}>
+            <div className="shrink-0 w-10 h-10 rounded-full flex items-center justify-center" style={{ background: "rgba(170,255,0,0.15)" }}>
+              <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" style={{ color: "#aaff00" }} fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
               </svg>
             </div>
             <div>
-              <p className="text-amber-400 font-semibold">Pedido realizado con éxito</p>
+              <p className="font-semibold" style={{ color: "#aaff00" }}>Pedido realizado con éxito</p>
               <p className="text-zinc-400 text-sm mt-1">
                 Te contactaremos pronto para coordinar la entrega.
               </p>
@@ -152,7 +152,7 @@ function PedidoContent() {
               </div>
               <div className="flex justify-between">
                 <span className="text-zinc-500">Estado</span>
-                <span className={order.paymentStatus === "PAID" ? "text-amber-400" : "text-yellow-400"}>
+                <span style={{ color: order.paymentStatus === "PAID" ? "#aaff00" : "#facc15" }}>
                   {order.paymentStatus === "PAID" ? "Pagado" : "Pendiente"}
                 </span>
               </div>
@@ -178,8 +178,9 @@ function PedidoContent() {
                         src={item.product.imageUrl}
                         alt={item.product.name}
                         fill
+                        sizes="56px"
                         className="object-contain p-1.5"
-                        unoptimized
+
                       />
                     ) : (
                       <div className="w-full h-full flex items-center justify-center text-zinc-600 text-xs">?</div>
@@ -215,7 +216,8 @@ function PedidoContent() {
           </Link>
           <Link
             href="/productos"
-            className="flex-1 text-center bg-amber-500 hover:bg-amber-400 text-white font-semibold py-3 rounded-full transition-colors text-sm"
+            className="flex-1 text-center font-semibold py-3 rounded-full transition-all text-sm"
+            style={{ background: "linear-gradient(135deg, #aaff00, #00ff44)", color: "#000" }}
           >
             Seguir comprando
           </Link>

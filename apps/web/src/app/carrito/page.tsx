@@ -65,7 +65,7 @@ export default function CarritoPage() {
         headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
         body: JSON.stringify({ quantity }),
       });
-      if (res.ok) setCart(await res.json());
+      if (res.ok) { setCart(await res.json()); window.dispatchEvent(new Event("cart-updated")); }
     } finally {
       setUpdating(null);
     }
@@ -79,7 +79,7 @@ export default function CarritoPage() {
         method: "DELETE",
         headers: { Authorization: `Bearer ${token}` },
       });
-      if (res.ok) setCart(await res.json());
+      if (res.ok) { setCart(await res.json()); window.dispatchEvent(new Event("cart-updated")); }
     } finally {
       setUpdating(null);
     }
@@ -93,7 +93,7 @@ export default function CarritoPage() {
         method: "DELETE",
         headers: { Authorization: `Bearer ${token}` },
       });
-      if (res.ok) setCart(await res.json());
+      if (res.ok) { setCart(await res.json()); window.dispatchEvent(new Event("cart-updated")); }
     } finally {
       setLoading(false);
     }
@@ -120,7 +120,10 @@ export default function CarritoPage() {
 
       <div className="max-w-4xl mx-auto px-4 py-10">
         <div className="flex items-center justify-between mb-8">
-          <h1 className="text-white text-3xl font-bold">Mi carrito</h1>
+          <div className="flex items-center gap-3">
+            <div className="w-1 h-6 rounded-full" style={{ background: "#aaff00", boxShadow: "0 0 8px #aaff00, 0 0 20px rgba(170,255,0,0.4)" }} />
+            <h1 className="text-white text-3xl font-bold">Mi carrito</h1>
+          </div>
           {!empty && (
             <button
               onClick={clearCart}
@@ -139,7 +142,8 @@ export default function CarritoPage() {
             <p className="text-zinc-500 text-lg">Tu carrito está vacío</p>
             <Link
               href="/productos"
-              className="inline-block bg-amber-500 hover:bg-amber-400 text-white font-semibold px-8 py-3 rounded-full transition-colors text-sm"
+              className="inline-block font-semibold px-8 py-3 rounded-full transition-all text-sm"
+              style={{ background: "linear-gradient(135deg, #aaff00, #00ff44)", color: "#000" }}
             >
               Ver productos
             </Link>
@@ -153,7 +157,6 @@ export default function CarritoPage() {
                   key={item.id}
                   className="flex gap-4 bg-zinc-900 border border-zinc-800 rounded-2xl p-4"
                 >
-                  {/* Imagen */}
                   <Link href={`/productos/${item.product.slug}`} className="shrink-0">
                     <div className="w-20 h-20 bg-zinc-800 rounded-xl overflow-hidden relative">
                       {item.product.imageUrl ? (
@@ -161,8 +164,8 @@ export default function CarritoPage() {
                           src={item.product.imageUrl}
                           alt={item.product.name}
                           fill
+                          sizes="80px"
                           className="object-contain p-2"
-                          unoptimized
                         />
                       ) : (
                         <div className="w-full h-full flex items-center justify-center text-zinc-600 text-xs">
@@ -172,18 +175,16 @@ export default function CarritoPage() {
                     </div>
                   </Link>
 
-                  {/* Info */}
                   <div className="flex-1 min-w-0">
                     <Link href={`/productos/${item.product.slug}`}>
-                      <p className="text-white text-sm font-medium line-clamp-2 hover:text-amber-400 transition-colors">
+                      <p className="text-white text-sm font-medium line-clamp-2 hover:text-[#aaff00] transition-colors">
                         {item.product.name}
                       </p>
                     </Link>
-                    <p className="text-amber-400 font-semibold mt-1">
+                    <p className="font-semibold mt-1 text-sm" style={{ color: "#aaff00" }}>
                       Bs. {Number(item.product.price).toFixed(2)}
                     </p>
 
-                    {/* Cantidad */}
                     <div className="flex items-center gap-3 mt-2">
                       <button
                         disabled={item.quantity <= 1 || updating === item.productId}
@@ -206,7 +207,6 @@ export default function CarritoPage() {
                         onClick={() => removeItem(item.productId)}
                         disabled={updating === item.productId}
                         className="ml-2 w-7 h-7 rounded-full flex items-center justify-center text-zinc-600 hover:text-red-400 hover:bg-red-400/10 disabled:opacity-40 transition-colors"
-                        aria-label="Eliminar producto"
                       >
                         <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
                           <path strokeLinecap="round" strokeLinejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
@@ -215,7 +215,6 @@ export default function CarritoPage() {
                     </div>
                   </div>
 
-                  {/* Subtotal item */}
                   <div className="shrink-0 text-right">
                     <p className="text-white font-semibold text-sm">
                       Bs. {(Number(item.product.price) * item.quantity).toFixed(2)}
@@ -236,7 +235,7 @@ export default function CarritoPage() {
                   </div>
                   <div className="flex justify-between text-zinc-400">
                     <span>Envío</span>
-                    <span className="text-amber-400">Por calcular</span>
+                    <span style={{ color: "#aaff00" }}>Por confirmar</span>
                   </div>
                 </div>
                 <div className="border-t border-zinc-800 pt-3 flex justify-between text-white font-semibold">
@@ -245,7 +244,8 @@ export default function CarritoPage() {
                 </div>
                 <Link
                   href="/checkout"
-                  className="block w-full bg-amber-500 hover:bg-amber-400 text-white font-semibold py-3 rounded-full transition-colors text-sm text-center"
+                  className="block w-full font-semibold py-3 rounded-full transition-all text-sm text-center"
+                  style={{ background: "linear-gradient(135deg, #aaff00, #00ff44)", color: "#000" }}
                 >
                   Proceder al pago
                 </Link>

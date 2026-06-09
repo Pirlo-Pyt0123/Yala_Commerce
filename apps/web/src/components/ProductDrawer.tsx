@@ -57,13 +57,10 @@ export default function ProductDrawer() {
     try {
       const res = await fetch(`${API}/cart/items`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
+        headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
         body: JSON.stringify({ productId: product!.id, quantity: qty }),
       });
-      if (res.ok) setAdded(true);
+      if (res.ok) { setAdded(true); window.dispatchEvent(new Event("cart-updated")); }
     } catch {}
     finally { setAdding(false); }
   }
@@ -104,7 +101,7 @@ export default function ProductDrawer() {
         <div className="flex-1 overflow-y-auto">
           {loadingProduct && (
             <div className="flex items-center justify-center h-64">
-              <div className="w-8 h-8 border-2 border-amber-500 border-t-transparent rounded-full animate-spin" />
+              <div className="w-8 h-8 border-2 border-t-transparent rounded-full animate-spin" style={{ borderColor: "#aaff00 transparent transparent transparent" }} />
             </div>
           )}
 
@@ -117,8 +114,8 @@ export default function ProductDrawer() {
                     src={product.imageUrl}
                     alt={product.name}
                     fill
+                    sizes="420px"
                     className="object-contain p-8"
-                    unoptimized
                   />
                 ) : (
                   <svg className="w-20 h-20 text-zinc-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -132,7 +129,8 @@ export default function ProductDrawer() {
                 <Link
                   href={`/productos?category=${product.category.slug}`}
                   onClick={closeDrawer}
-                  className="inline-block text-amber-400 text-xs font-semibold uppercase tracking-wider hover:text-amber-300 transition-colors"
+                  className="inline-block text-xs font-semibold uppercase tracking-wider transition-colors"
+                  style={{ color: "#aaff00" }}
                 >
                   {product.category.name}
                 </Link>
@@ -141,7 +139,7 @@ export default function ProductDrawer() {
                   {product.name}
                 </h2>
 
-                <p className="text-amber-400 text-3xl font-bold">
+                <p className="text-3xl font-bold" style={{ color: "#aaff00" }}>
                   Bs. {Number(product.price).toFixed(2)}
                 </p>
 
@@ -152,7 +150,9 @@ export default function ProductDrawer() {
                 )}
 
                 <div className="flex items-center gap-2">
-                  <span className={`w-2 h-2 rounded-full shrink-0 ${inStock ? "bg-amber-500" : "bg-red-500"}`} />
+                  <span className={`w-2 h-2 rounded-full shrink-0 ${inStock ? "" : "bg-red-500"}`}
+                    style={inStock ? { background: "#aaff00", boxShadow: "0 0 6px #aaff00" } : {}}
+                  />
                   <span className={`text-sm ${inStock ? "text-zinc-400" : "text-red-400"}`}>
                     {inStock ? `${product.stock} unidades disponibles` : "Sin stock"}
                   </span>
@@ -196,7 +196,8 @@ export default function ProductDrawer() {
                 <button
                   onClick={addToCart}
                   disabled={adding}
-                  className="w-full bg-amber-500 hover:bg-amber-400 disabled:opacity-60 text-white font-semibold py-3.5 rounded-xl transition-colors text-sm"
+                  className="w-full disabled:opacity-60 font-semibold py-3.5 rounded-xl transition-all text-sm"
+                  style={{ background: "linear-gradient(135deg, #aaff00, #00ff44)", color: "#000" }}
                 >
                   {adding ? "Agregando..." : added ? "Agregar más" : "Agregar al carrito"}
                 </button>
@@ -204,7 +205,8 @@ export default function ProductDrawer() {
                   <Link
                     href="/carrito"
                     onClick={closeDrawer}
-                    className="block w-full text-center border border-amber-500/50 hover:border-amber-500 text-amber-400 hover:text-amber-300 font-medium py-3.5 rounded-xl transition-colors text-sm"
+                    className="block w-full text-center font-medium py-3.5 rounded-xl transition-all text-sm"
+                    style={{ border: "1px solid rgba(170,255,0,0.4)", color: "#aaff00" }}
                   >
                     Ver carrito →
                   </Link>

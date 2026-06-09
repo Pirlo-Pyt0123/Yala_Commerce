@@ -13,7 +13,7 @@ export default function Footer() {
           <div className="col-span-2 md:col-span-1 space-y-4">
             <Link href="/" className="inline-block">
               <Image
-                src="/yalaSPPG.png"
+                src="/logoLico.webp"
                 alt="Yala"
                 width={80}
                 height={32}
