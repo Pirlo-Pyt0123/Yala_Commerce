@@ -119,7 +119,7 @@ export default function AdminProductosPage() {
                       <div className="flex items-center gap-3">
                         <div className="w-10 h-10 bg-zinc-800 rounded-lg overflow-hidden relative shrink-0">
                           {p.imageUrl ? (
-                            <Image src={p.imageUrl} alt={p.name} fill className="object-contain p-1" unoptimized />
+                            <Image src={p.imageUrl} alt={p.name} fill className="object-contain p-1" />
                           ) : (
                             <div className="w-full h-full flex items-center justify-center text-zinc-700 text-xs">?</div>
                           )}

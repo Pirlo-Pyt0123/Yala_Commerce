@@ -1,10 +1,15 @@
 import { Injectable, BadRequestException, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateOrderDto } from './dto/create-order.dto';
+import { ShippingFormDto, CapturePaypalDto } from './dto/paypal-order.dto';
+import { PaypalService } from '../paypal/paypal.service';
 
 @Injectable()
 export class OrdersService {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    private paypal: PaypalService,
+  ) {}
 
   async createFromCart(userId: number, dto: CreateOrderDto) {
     const cart = await this.prisma.cart.findUnique({
@@ -116,6 +121,120 @@ export class OrdersService {
     return this.format(order);
   }
 
+  // ── PayPal ─────────────────────────────────────────────────────────────────
+
+  async createPaypalPayment(userId: number, dto: ShippingFormDto) {
+    const cart = await this.prisma.cart.findUnique({
+      where: { userId },
+      include: {
+        items: {
+          include: {
+            product: { select: { id: true, name: true, price: true, stock: true, isActive: true } },
+          },
+        },
+      },
+    });
+
+    if (!cart || cart.items.length === 0) {
+      throw new BadRequestException('El carrito está vacío');
+    }
+
+    for (const item of cart.items) {
+      if (!item.product.isActive)
+        throw new BadRequestException(`"${item.product.name}" ya no está disponible`);
+      if (item.product.stock < item.quantity)
+        throw new BadRequestException(`Stock insuficiente para "${item.product.name}"`);
+    }
+
+    const totalBs = cart.items.reduce(
+      (sum, item) => sum + Number(item.product.price) * item.quantity,
+      0,
+    );
+
+    const amountUSD = this.paypal.bsToUsd(totalBs);
+    const paypalOrderId = await this.paypal.createOrder(amountUSD, `user-${userId}`);
+
+    return { paypalOrderId, amountUSD };
+  }
+
+  async capturePaypalPayment(userId: number, dto: CapturePaypalDto) {
+    const capture = await this.paypal.captureOrder(dto.paypalOrderId);
+
+    if (capture.status !== 'COMPLETED') {
+      throw new BadRequestException('El pago no fue completado');
+    }
+
+    const cart = await this.prisma.cart.findUnique({
+      where: { userId },
+      include: {
+        items: {
+          include: {
+            product: { select: { id: true, name: true, price: true, stock: true, isActive: true } },
+          },
+        },
+      },
+    });
+
+    if (!cart || cart.items.length === 0) {
+      throw new BadRequestException('El carrito está vacío');
+    }
+
+    for (const item of cart.items) {
+      if (item.product.stock < item.quantity)
+        throw new BadRequestException(`Stock insuficiente para "${item.product.name}"`);
+    }
+
+    const total = cart.items.reduce(
+      (sum, item) => sum + Number(item.product.price) * item.quantity,
+      0,
+    );
+
+    const order = await this.prisma.$transaction(async (tx) => {
+      for (const item of cart.items) {
+        await tx.product.update({
+          where: { id: item.productId },
+          data: { stock: { decrement: item.quantity } },
+        });
+      }
+
+      const created = await tx.order.create({
+        data: {
+          userId,
+          total,
+          fullName: dto.fullName,
+          phone: dto.phone,
+          address: dto.address,
+          district: dto.district,
+          city: dto.city,
+          notes: dto.notes,
+          paymentMethod: 'PAYPAL',
+          paymentStatus: 'PAID',
+          paypalOrderId: dto.paypalOrderId,
+          items: {
+            create: cart.items.map((item) => ({
+              productId: item.productId,
+              quantity: item.quantity,
+              price: item.product.price,
+            })),
+          },
+        },
+        include: {
+          items: {
+            include: {
+              product: { select: { id: true, name: true, slug: true, imageUrl: true } },
+            },
+          },
+        },
+      });
+
+      await tx.cartItem.deleteMany({ where: { cartId: cart.id } });
+
+      return created;
+    });
+
+    return this.format(order);
+  }
+
   // ── Admin ──────────────────────────────────────────────────────────────────
 
   async adminFindAll(page = 1, limit = 20) {
@@ -135,6 +254,18 @@ export class OrdersService {
       data: orders.map((o) => ({ ...this.format(o), user: (o as any).user })),
       meta: { total, page, limit, totalPages: Math.ceil(total / limit) },
     };
+  }
+
+  async adminGetOrder(orderId: number) {
+    const order = await this.prisma.order.findUnique({
+      where: { id: orderId },
+      include: {
+        user: { select: { id: true, name: true, email: true } },
+        items: { include: { product: { select: { id: true, name: true, slug: true, imageUrl: true } } } },
+      },
+    });
+    if (!order) throw new NotFoundException('Pedido no encontrado');
+    return { ...this.format(order), user: (order as any).user };
   }
 
   async updateStatus(orderId: number, status: string) {

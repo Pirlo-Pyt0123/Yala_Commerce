@@ -181,7 +181,7 @@ export default function ProductForm({ productId }: Props) {
         />
         {form.imageUrl && (
           <div className="mt-2 w-20 h-20 bg-zinc-800 rounded-xl overflow-hidden relative border border-zinc-700">
-            <Image src={form.imageUrl} alt="preview" fill className="object-contain p-2" unoptimized />
+            <Image src={form.imageUrl} alt="preview" fill className="object-contain p-2" />
           </div>
         )}
       </div>

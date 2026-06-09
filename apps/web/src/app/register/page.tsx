@@ -171,7 +171,8 @@ function RegisterContent() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-amber-500 hover:bg-amber-400 disabled:opacity-60 text-white font-semibold py-3 rounded-full transition-colors text-sm"
+            className="w-full disabled:opacity-60 font-semibold py-3 rounded-full transition-all text-sm"
+            style={{ background: "linear-gradient(135deg, #aaff00, #00ff44)", color: "#000" }}
           >
             {loading ? "Creando cuenta..." : "Registrarme"}
           </button>

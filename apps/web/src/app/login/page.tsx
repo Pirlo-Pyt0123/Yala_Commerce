@@ -116,9 +116,8 @@ function LoginContent() {
           <label className="flex items-center gap-2 cursor-pointer w-fit">
             <div
               onClick={() => setRemember(!remember)}
-              className={`w-5 h-5 rounded flex items-center justify-center border transition-colors ${
-                remember ? "bg-amber-500 border-amber-500" : "border-white/40 bg-white/10"
-              }`}
+              className="w-5 h-5 rounded flex items-center justify-center border transition-colors"
+              style={remember ? { background: "#aaff00", borderColor: "#aaff00" } : {}}
             >
               {remember && (
                 <svg xmlns="http://www.w3.org/2000/svg" className="w-3 h-3 text-white" viewBox="0 0 20 20" fill="currentColor">
@@ -138,7 +137,8 @@ function LoginContent() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-amber-500 hover:bg-amber-400 disabled:opacity-60 text-white font-semibold py-3 rounded-full transition-colors text-sm"
+            className="w-full disabled:opacity-60 font-semibold py-3 rounded-full transition-all text-sm"
+            style={{ background: "linear-gradient(135deg, #aaff00, #00ff44)", color: "#000" }}
           >
             {loading ? "Ingresando..." : "Login"}
           </button>

@@ -1,6 +1,6 @@
 import { IsString, IsNotEmpty, IsOptional, IsIn, MinLength, Matches } from 'class-validator';
 
-const PAYMENT_METHODS = ['COD', 'PAYPAL', 'CARD'] as const;
+const PAYMENT_METHODS = ['COD', 'PAYPAL', 'CARD', 'QR'] as const;
 export type PaymentMethod = typeof PAYMENT_METHODS[number];
 
 export class CreateOrderDto {

@@ -43,15 +43,9 @@ export default function AdminPedidoDetallePage() {
     const token = localStorage.getItem("token");
     if (!token) { router.push("/login"); return; }
 
-    // Fetch all orders and find this one (admin endpoint returns all)
-    fetch(`${API}/orders/admin/all?limit=999`, { headers: { Authorization: `Bearer ${token}` } })
-      .then((r) => r.json())
-      .then((data) => {
-        const found = data.data?.find((o: Order) => o.id === Number(id));
-        if (!found) { router.push("/admin/pedidos"); return; }
-        setOrder(found);
-        setStatus(found.status);
-      })
+    fetch(`${API}/orders/admin/${id}`, { headers: { Authorization: `Bearer ${token}` } })
+      .then((r) => { if (!r.ok) throw new Error(); return r.json(); })
+      .then((data) => { setOrder(data); setStatus(data.status); })
       .catch(() => router.push("/admin/pedidos"))
       .finally(() => setLoading(false));
   }, [id, router]);
@@ -82,7 +76,7 @@ export default function AdminPedidoDetallePage() {
   if (!order) return null;
 
   const s = STATUS_LABELS[order.status] ?? { label: order.status, color: "text-zinc-400 bg-zinc-400/10 border-zinc-400/30" };
-  const date = new Date(order.createdAt).toLocaleDateString("es-PE", { year: "numeric", month: "long", day: "numeric", hour: "2-digit", minute: "2-digit" });
+  const date = new Date(order.createdAt).toLocaleDateString("es-BO", { year: "numeric", month: "long", day: "numeric", hour: "2-digit", minute: "2-digit" });
 
   return (
     <div className="p-6 max-w-3xl mx-auto space-y-6">
@@ -153,7 +147,7 @@ export default function AdminPedidoDetallePage() {
             <div key={item.productId} className="flex gap-4 py-4 first:pt-0 last:pb-0">
               <div className="w-14 h-14 bg-zinc-800 rounded-xl overflow-hidden relative shrink-0">
                 {item.product.imageUrl ? (
-                  <Image src={item.product.imageUrl} alt={item.product.name} fill className="object-contain p-1.5" unoptimized />
+                  <Image src={item.product.imageUrl} alt={item.product.name} fill className="object-contain p-1.5" />
                 ) : (
                   <div className="w-full h-full flex items-center justify-center text-zinc-700 text-xs">?</div>
                 )}
