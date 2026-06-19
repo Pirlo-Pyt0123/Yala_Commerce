@@ -97,6 +97,7 @@ export default function Navbar() {
           {/* Links izquierda */}
           <Link href="/" className={linkCls("/", true)}>Inicio</Link>
           <Link href="/productos" className={linkCls("/productos")}>Catálogo</Link>
+          <Link href="/contacto" className={linkCls("/contacto")}>Contacto</Link>
 
           {/* Logo centrado */}
           <Link href="/" className="mx-3 flex items-center">
@@ -201,6 +202,7 @@ export default function Navbar() {
           {[
             { href: "/", label: "Inicio" },
             { href: "/productos", label: "Catálogo" },
+            { href: "/contacto", label: "Contacto" },
             ...(user ? [{ href: "/pedidos", label: "Mis pedidos" }] : []),
           ].map((l) => (
             <Link

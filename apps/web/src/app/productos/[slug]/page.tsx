@@ -1,5 +1,6 @@
 export const dynamic = "force-dynamic";
 
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -30,6 +31,33 @@ async function getProduct(slug: string): Promise<Product | null | "error"> {
   } catch {
     return "error";
   }
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const product = await getProduct(slug);
+
+  if (!product || product === "error") {
+    return { title: "Producto" };
+  }
+
+  const description =
+    product.description ??
+    `Compra ${product.name} en Yala, tu licorería en Bolivia con entrega a domicilio.`;
+
+  return {
+    title: product.name,
+    description,
+    openGraph: {
+      title: product.name,
+      description,
+      images: product.imageUrl ? [{ url: product.imageUrl }] : undefined,
+    },
+  };
 }
 
 export default async function ProductoDetalle({
